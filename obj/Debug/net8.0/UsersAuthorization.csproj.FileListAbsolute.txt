@@ -249,6 +249,7 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.csproj.CoreCompileInputs.cache
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.sourcelink.json
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\staticwebassets\msbuild.UsersAuthorization.Microsoft.AspNetCore.StaticWebAssets.props

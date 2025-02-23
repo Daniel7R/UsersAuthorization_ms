@@ -33,7 +33,7 @@ builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
-builder.Services.AddSingleton<IEventBus, EventBusConsumer>();
+builder.Services.AddSingleton<IEventBusConsumer, EventBusConsumer>();
 builder.Services.AddHostedService<EventBusConsumer>();
 
 builder.Services.AddControllers();

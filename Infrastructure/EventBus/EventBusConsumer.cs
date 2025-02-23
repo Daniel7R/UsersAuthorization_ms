@@ -11,7 +11,7 @@ using UsersAuthorization.Domain.Messages;
 //consumer
 namespace UsersAuthorization.Infrastructure.EventBus
 {
-    public class EventBusConsumer: BackgroundService, IEventBus, IAsyncDisposable
+    public class EventBusConsumer: BackgroundService, IEventBusConsumer, IAsyncDisposable
     {
         private IConnection _connection; 
         private IChannel _channel;
@@ -37,9 +37,28 @@ namespace UsersAuthorization.Infrastructure.EventBus
         private async Task InitializeAsync()
         {
 
-            var factory = new ConnectionFactory { HostName = _rabbitmqSettings.Host, UserName = _rabbitmqSettings.Username, Password = _rabbitmqSettings.Password, Port = _rabbitmqSettings.Port }; 
-            _connection = await factory.CreateConnectionAsync();
-            _channel = await _connection.CreateChannelAsync();
+            var factory = new ConnectionFactory {
+                HostName = _rabbitmqSettings.Host,
+                UserName = _rabbitmqSettings.Username,
+                Password = _rabbitmqSettings.Password,
+                Port = _rabbitmqSettings.Port,
+                AutomaticRecoveryEnabled = true,
+                NetworkRecoveryInterval = TimeSpan.FromSeconds(5),
+                RequestedHeartbeat = TimeSpan.FromSeconds(30),
+                ContinuationTimeout = TimeSpan.FromSeconds(30),
+            };
+            while (_connection == null || !_connection.IsOpen || _channel == null || _channel.IsClosed)
+            {
+                try
+                {
+                    _connection = await factory.CreateConnectionAsync();
+                    _channel = await _connection.CreateChannelAsync();
+                }
+                catch (Exception ex)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                }
+            }
 
             RegisterHandlers();
         }
@@ -73,9 +92,13 @@ namespace UsersAuthorization.Infrastructure.EventBus
         public void RegisterQueueHandler<TRequest, TResponse>(string queueName, Func<TRequest, Task<TResponse>> handler)
         {
             if (_channel == null) throw new InvalidOperationException("EventBusRabbitMQ is not initialized.");
-            
+            if (_connection == null || !_connection.IsOpen || _channel == null || !_channel.IsOpen )
+            {
+                Task.Run(InitializeAsync).GetAwaiter().GetResult();
+            }
+
             _channel.QueueDeclareAsync(queue: queueName, durable: true, exclusive: false, autoDelete: false, null).Wait();
-            
+            _channel.BasicQosAsync(0, 1, false);
 
             _handlers[queueName] = async (message) =>
             {
@@ -106,6 +129,10 @@ namespace UsersAuthorization.Infrastructure.EventBus
                 }
                 catch (Exception ex) {
                     //to reject in fail case
+                    if (!_connection.IsOpen)
+                    {
+                        await InitializeAsync();
+                    }
                     await _channel.BasicNackAsync(ea.DeliveryTag, multiple: false, requeue: true);
                 }
             };
@@ -113,8 +140,14 @@ namespace UsersAuthorization.Infrastructure.EventBus
             _channel.BasicConsumeAsync(queue: queueName, autoAck: false, consumer: consumer).Wait();
         }
 
+        /*
         public async Task<TResponse> SendRequestAsync<TRequest, TResponse>(TRequest request, string queueName)
         {
+            if (_connection == null || !_connection.IsOpen)
+            {
+                await InitializeAsync();
+            }
+
             var replyQueueName = (await _channel.QueueDeclareAsync()).QueueName;
             var correlationId = Guid.NewGuid().ToString();
             var props = new BasicProperties
@@ -145,14 +178,26 @@ namespace UsersAuthorization.Infrastructure.EventBus
 
             return await tcs.Task;
         }
+        */
 
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await InitializeAsync();
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(1000, stoppingToken);
+                if (_connection == null || !_connection.IsOpen || _channel == null || !_channel.IsOpen)
+                {
+                    await InitializeAsync();
+                }
+
+                try
+                {
+                    await Task.Delay(500, stoppingToken);
+                }
+                catch (Exception ex)
+                {
+                    await InitializeAsync();
+                }
             }
         }
 
