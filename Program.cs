@@ -1,7 +1,6 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using UsersAuthorization.Application.Interfaces;
 using UsersAuthorization.Application.Mapping;
 using UsersAuthorization.Application.Service;

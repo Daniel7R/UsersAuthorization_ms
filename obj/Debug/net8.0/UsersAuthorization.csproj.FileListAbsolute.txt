@@ -264,3 +264,4 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.pdb
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.genruntimeconfig.cache
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\ref\UsersAuthorization.dll
+C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Infrastructure\Security\client_rabbit.pfx
