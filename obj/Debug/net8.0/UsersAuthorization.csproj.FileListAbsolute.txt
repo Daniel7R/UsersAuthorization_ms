@@ -6,6 +6,7 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\xunit.runner.reporters.netcoreapp10.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\xunit.runner.utility.netcoreapp10.dll
+C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Infrastructure\Security\client_rabbit.pfx
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.exe
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.deps.json
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.runtimeconfig.json
@@ -264,4 +265,3 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.pdb
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.genruntimeconfig.cache
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\ref\UsersAuthorization.dll
-C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Infrastructure\Security\client_rabbit.pfx

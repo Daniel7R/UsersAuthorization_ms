@@ -1,4 +1,4 @@
-﻿namespace UsersAuthorization.Domain.Messages
+﻿namespace UsersAuthorization.Application.Messages.Request
 {
     public class GetUserByIdRequest
     {

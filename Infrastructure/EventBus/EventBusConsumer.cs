@@ -6,7 +6,9 @@ using UsersAuthorization.Application.Interfaces;
 using UsersAuthorization.Domain.Entities;
 using UsersAuthorization.Infrastructure.Repository;
 using Microsoft.Extensions.Options;
-using UsersAuthorization.Domain.Messages;
+using UsersAuthorization.Application.Queues;
+using UsersAuthorization.Application.Messages.Request;
+using UsersAuthorization.Application.Messages.Response;
 
 //consumer
 namespace UsersAuthorization.Infrastructure.EventBus
@@ -19,18 +21,19 @@ namespace UsersAuthorization.Infrastructure.EventBus
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly RabbitMQSettings _rabbitmqSettings;
         private readonly Dictionary<string, Func<string, Task<string>>> _handlers;
+        private readonly ILogger<EventBusConsumer> _logger;
 
-        public EventBusConsumer(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> options)
+        public EventBusConsumer(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> options, ILogger<EventBusConsumer> logger)
         {
-            Console.Write("trying to connect");
             _rabbitmqSettings = options.Value;
             _serviceScopeFactory = serviceScopeFactory;
             _handlers = new();
+            _logger = logger;
         }
 
-        public static async Task<EventBusConsumer> CreateAsync(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> options)
+        public static async Task<EventBusConsumer> CreateAsync(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> options, ILogger<EventBusConsumer> logger)
         {
-            var instance = new EventBusConsumer(serviceScopeFactory, options);
+            var instance = new EventBusConsumer(serviceScopeFactory, options, logger);
             await instance.InitializeAsync();
             return instance;
         }
@@ -70,6 +73,7 @@ namespace UsersAuthorization.Infrastructure.EventBus
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError($"Error creation connection {ex.Message}");
                     await Task.Delay(TimeSpan.FromSeconds(5));
                 }
             }
@@ -79,27 +83,21 @@ namespace UsersAuthorization.Infrastructure.EventBus
 
         private void RegisterHandlers()
         {
-            RegisterQueueHandler<GetUserByIdRequest, GetUserByIdResponse>("GetUserById", async (request) =>
+            RegisterQueueHandler<GetUserByIdRequest, GetUserByIdResponse>(Queues.GET_USER_BY_ID, async (request) =>
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     var userRepository = scope.ServiceProvider.GetRequiredService<IRepository<ApplicationUser>>();
                     var user = await userRepository.GetByIdAsync(request.Id);
+#pragma warning disable CS8601 // Posible asignación de referencia nula
                     return new GetUserByIdResponse
                     {
                         Id = user?.Id ?? 0,
                         Name = user?.Name,
                         Email = user?.Email
                     };
+#pragma warning restore CS8601 // Posible asignación de referencia nula
                 }
-            
-                /*var user = await _userRepository.GetByIdAsync(request.Id);
-                return new GetUserByIdResponse
-                {
-                    Id = user?.Id ?? 0,
-                    Name = user?.Name,
-                    Email = user?.Email
-                };*/
             });
         }
 
@@ -142,6 +140,7 @@ namespace UsersAuthorization.Infrastructure.EventBus
                     await _channel.BasicAckAsync(ea.DeliveryTag, multiple: false);
                 }
                 catch (Exception ex) {
+                    _logger.LogError($"Error handling queue req {ex.Message}");
                     //to reject in fail case
                     if (!_connection.IsOpen)
                     {
@@ -210,6 +209,7 @@ namespace UsersAuthorization.Infrastructure.EventBus
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError($"{ex.Message}");
                     await InitializeAsync();
                 }
             }

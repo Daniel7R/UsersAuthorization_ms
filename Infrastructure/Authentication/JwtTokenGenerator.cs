@@ -33,9 +33,9 @@ namespace UsersAuthorization.Infrastructure.Authentication
                 Issuer = _jwtOptions.Issuer,
                 Audience = _jwtOptions.Audience,
                 Subject = new ClaimsIdentity(claimList),
-                IssuedAt = DateTime.UtcNow,
+                IssuedAt = DateTime.UtcNow.AddHours(5),
                 //Expires = DateTime.UtcNow.AddHours(1),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddHours(5).AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

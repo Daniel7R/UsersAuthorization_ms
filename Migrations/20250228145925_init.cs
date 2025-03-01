@@ -4,6 +4,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace UsersAuthorization.Migrations
 {
     /// <inheritdoc />
@@ -51,24 +53,33 @@ namespace UsersAuthorization.Migrations
                 name: "user_roles",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
+                    id_user = table.Column<int>(type: "integer", nullable: false),
+                    id_role = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user_roles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_user_roles", x => new { x.id_user, x.id_role });
                     table.ForeignKey(
-                        name: "FK_user_roles_roles_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_user_roles_roles_id_role",
+                        column: x => x.id_role,
                         principalTable: "roles",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_user_roles_users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_user_roles_users_id_user",
+                        column: x => x.id_user,
                         principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "roles",
+                columns: new[] { "id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { 1, "example", "super_admin", "SUPER_ADMIN" },
+                    { 2, "example2", "user", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -78,9 +89,9 @@ namespace UsersAuthorization.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_user_roles_RoleId",
+                name: "IX_user_roles_id_role",
                 table: "user_roles",
-                column: "RoleId");
+                column: "id_role");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

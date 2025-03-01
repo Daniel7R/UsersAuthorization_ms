@@ -7,13 +7,12 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UsersAuthorization.Infrastructure.Data;
 
-
 #nullable disable
 
 namespace UsersAuthorization.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250210144304_init")]
+    [Migration("20250228145925_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -54,15 +53,33 @@ namespace UsersAuthorization.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "example",
+                            Name = "super_admin",
+                            NormalizedName = "SUPER_ADMIN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "example2",
+                            Name = "user",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id_user");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id_role");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -71,7 +88,7 @@ namespace UsersAuthorization.Migrations
                     b.ToTable("user_roles", (string)null);
                 });
 
-            modelBuilder.Entity("UsersAuthorization.Models.ApplicationUser", b =>
+            modelBuilder.Entity("UsersAuthorization.Domain.Entities.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,7 +150,7 @@ namespace UsersAuthorization.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsersAuthorization.Models.ApplicationUser", null)
+                    b.HasOne("UsersAuthorization.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
