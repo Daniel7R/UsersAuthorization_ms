@@ -7,28 +7,28 @@ using UsersAuthorization.Domain.Entities;
 using UsersAuthorization.Infrastructure.Repository;
 using Microsoft.Extensions.Options;
 using UsersAuthorization.Application.Queues;
-using UsersAuthorization.Application.Messages.Request;
 using UsersAuthorization.Application.Messages.Response;
+using UsersAuthorization.Infrastructure.EventHandler;
 
 //consumer
 namespace UsersAuthorization.Infrastructure.EventBus
 {
-    public class EventBusConsumer: BackgroundService, IEventBusConsumer, IAsyncDisposable
+    public class EventBusConsumer: EventBusBase, IEventBusConsumer
     {
-        private IConnection _connection; 
-        private IChannel _channel;
         //private readonly IRepository<ApplicationUser> _userRepository;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly RabbitMQSettings _rabbitmqSettings;
         private readonly Dictionary<string, Func<string, Task<string>>> _handlers;
         private readonly ILogger<EventBusConsumer> _logger;
 
-        public EventBusConsumer(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> options, ILogger<EventBusConsumer> logger)
+        public EventBusConsumer(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> options, ILogger<EventBusConsumer> logger): base(options)
         {
             _rabbitmqSettings = options.Value;
             _serviceScopeFactory = serviceScopeFactory;
             _handlers = new();
             _logger = logger;
+
+            InitializeAsync().GetAwaiter().GetResult();
         }
 
         public static async Task<EventBusConsumer> CreateAsync(IServiceScopeFactory serviceScopeFactory, IOptions<RabbitMQSettings> options, ILogger<EventBusConsumer> logger)
@@ -39,54 +39,23 @@ namespace UsersAuthorization.Infrastructure.EventBus
         }
         private async Task InitializeAsync()
         {
-            var basePath = AppContext.BaseDirectory;
-            var pfxCertPath = Path.Combine(basePath, "Infrastructure", "Security", _rabbitmqSettings.CertFile);
-            if (!File.Exists(pfxCertPath))
-            {
-                throw new FileNotFoundException("PFX certificate not found");
-            }
-
-            var factory = new ConnectionFactory {
-                HostName = _rabbitmqSettings.Host,
-                UserName = _rabbitmqSettings.Username,
-                Password = _rabbitmqSettings.Password,
-                Port = _rabbitmqSettings.Port,
-                AutomaticRecoveryEnabled = true,
-                NetworkRecoveryInterval = TimeSpan.FromSeconds(5),
-                RequestedHeartbeat = TimeSpan.FromSeconds(30),
-                ContinuationTimeout = TimeSpan.FromSeconds(30),
-                Ssl = new SslOption
-                {
-                    Enabled = true,
-                    ServerName = _rabbitmqSettings.ServerName,
-                    CertPath = pfxCertPath,
-                    CertPassphrase = _rabbitmqSettings.CertPassphrase,
-                    Version = System.Security.Authentication.SslProtocols.Tls12
-                }
-            };
-            while (_connection == null || !_connection.IsOpen || _channel == null || _channel.IsClosed)
-            {
-                try
-                {
-                    _connection = await factory.CreateConnectionAsync();
-                    _channel = await _connection.CreateChannelAsync();
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"Error creation connection {ex.Message}");
-                    await Task.Delay(TimeSpan.FromSeconds(5));
-                }
-            }
+            await base.InitializeAsync();
 
             RegisterHandlers();
         }
 
         private void RegisterHandlers()
         {
-            RegisterQueueHandler<GetUserByIdRequest, GetUserByIdResponse>(Queues.GET_USER_BY_ID, async (request) =>
+            RegisterQueueHandler<int, GetUserByIdResponse>(Queues.GET_USER_BY_ID, async (idUser) =>
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
+                    var handler = scope.ServiceProvider.GetRequiredService<UserEventHandler>();
+
+                    var responseHandler = await handler.GetUserInfo(idUser);
+
+                    return responseHandler;
+                    /*
                     var userRepository = scope.ServiceProvider.GetRequiredService<IRepository<ApplicationUser>>();
                     var user = await userRepository.GetByIdAsync(request.Id);
 #pragma warning disable CS8601 // Posible asignación de referencia nula
@@ -97,6 +66,7 @@ namespace UsersAuthorization.Infrastructure.EventBus
                         Email = user?.Email
                     };
 #pragma warning restore CS8601 // Posible asignación de referencia nula
+                */
                 }
             });
         }
@@ -193,7 +163,7 @@ namespace UsersAuthorization.Infrastructure.EventBus
         }
         */
 
-
+        /*
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -227,5 +197,6 @@ namespace UsersAuthorization.Infrastructure.EventBus
                 await _connection.DisposeAsync();
             }
         }
+        */
     }
 }

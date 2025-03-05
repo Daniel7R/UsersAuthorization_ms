@@ -18,6 +18,7 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\DotNetEnv.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Humanizer.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -73,6 +74,7 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\NuGet.Frameworks.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Sprache.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll

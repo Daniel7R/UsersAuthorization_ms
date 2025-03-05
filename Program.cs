@@ -9,9 +9,13 @@ using UsersAuthorization.Infrastructure.Authentication;
 using UsersAuthorization.Infrastructure.Data;
 using UsersAuthorization.Infrastructure.EventBus;
 using UsersAuthorization.Infrastructure.Repository;
+using DotNetEnv;
+using Microsoft.AspNetCore.DataProtection;
+using UsersAuthorization.Infrastructure.EventHandler;
 
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddEnvironmentVariables();
 // Add services to the container.
 
 //to enable insert date time
@@ -30,6 +34,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddScoped<UserEventHandler>();
 
 builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
 builder.Services.AddSingleton<IEventBusConsumer, EventBusConsumer>();
