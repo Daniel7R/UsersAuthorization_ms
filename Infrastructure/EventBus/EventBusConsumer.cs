@@ -8,7 +8,7 @@ using UsersAuthorization.Infrastructure.Repository;
 using Microsoft.Extensions.Options;
 using UsersAuthorization.Application.Queues;
 using UsersAuthorization.Application.Messages.Response;
-using UsersAuthorization.Infrastructure.EventHandler;
+using UsersAuthorization.Application.EventHandler;
 
 //consumer
 namespace UsersAuthorization.Infrastructure.EventBus
@@ -67,6 +67,18 @@ namespace UsersAuthorization.Infrastructure.EventBus
                     };
 #pragma warning restore CS8601 // Posible asignación de referencia nula
                 */
+                }
+            });
+
+            RegisterQueueHandler<object?, List<int>>(Queues.ALL_USER_EMAILS, async (obj) =>
+            {
+                using(var scope = _serviceScopeFactory.CreateScope())
+                {
+                    var handler = scope.ServiceProvider.GetRequiredService<UserEventHandler>();
+
+                    var responseHandler = await handler.GetAllUserEmails();
+
+                    return responseHandler;
                 }
             });
         }

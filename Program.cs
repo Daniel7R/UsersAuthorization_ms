@@ -11,7 +11,7 @@ using UsersAuthorization.Infrastructure.EventBus;
 using UsersAuthorization.Infrastructure.Repository;
 using DotNetEnv;
 using Microsoft.AspNetCore.DataProtection;
-using UsersAuthorization.Infrastructure.EventHandler;
+using UsersAuthorization.Application.EventHandler;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
