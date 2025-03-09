@@ -55,18 +55,18 @@ namespace UsersAuthorization.Infrastructure.EventBus
                     var responseHandler = await handler.GetUserInfo(idUser);
 
                     return responseHandler;
-                    /*
-                    var userRepository = scope.ServiceProvider.GetRequiredService<IRepository<ApplicationUser>>();
-                    var user = await userRepository.GetByIdAsync(request.Id);
-#pragma warning disable CS8601 // Posible asignación de referencia nula
-                    return new GetUserByIdResponse
-                    {
-                        Id = user?.Id ?? 0,
-                        Name = user?.Name,
-                        Email = user?.Email
-                    };
-#pragma warning restore CS8601 // Posible asignación de referencia nula
-                */
+                }
+            });
+
+            RegisterQueueHandler<List<int>, List<GetUserByIdResponse>>(Queues.USERS_BULK_INFO, async (idUsers) =>
+            {
+                using (var scope = _serviceScopeFactory.CreateScope())
+                {
+                    var handler = scope.ServiceProvider.GetRequiredService<UserEventHandler>();
+
+                    var responseHandler = await handler.GetUsersInfo(idUsers);
+
+                    return responseHandler;
                 }
             });
 
@@ -134,81 +134,5 @@ namespace UsersAuthorization.Infrastructure.EventBus
 
             _channel.BasicConsumeAsync(queue: queueName, autoAck: false, consumer: consumer).Wait();
         }
-
-        /*
-        public async Task<TResponse> SendRequestAsync<TRequest, TResponse>(TRequest request, string queueName)
-        {
-            if (_connection == null || !_connection.IsOpen)
-            {
-                await InitializeAsync();
-            }
-
-            var replyQueueName = (await _channel.QueueDeclareAsync()).QueueName;
-            var correlationId = Guid.NewGuid().ToString();
-            var props = new BasicProperties
-            {
-                CorrelationId = correlationId,
-                ReplyTo = replyQueueName
-            };
-
-            var messageBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request));
-
-            await _channel.BasicPublishAsync(exchange: "", routingKey: queueName, mandatory: false, basicProperties: props, body: messageBytes);
-
-            var tcs = new TaskCompletionSource<TResponse>();
-
-            var consumer = new AsyncEventingBasicConsumer(_channel);
-            consumer.ReceivedAsync +=  async (model, ea) =>
-            {
-                if (ea.BasicProperties.CorrelationId == correlationId)
-                {
-                    var response = JsonConvert.DeserializeObject<TResponse>(Encoding.UTF8.GetString(ea.Body.ToArray()));
-                    tcs.SetResult(response);
-                }
-
-                await Task.CompletedTask;
-            };
-
-            await _channel.BasicConsumeAsync(consumer: consumer, queue: replyQueueName, autoAck: true);
-
-            return await tcs.Task;
-        }
-        */
-
-        /*
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                if (_connection == null || !_connection.IsOpen || _channel == null || !_channel.IsOpen)
-                {
-                    await InitializeAsync();
-                }
-
-                try
-                {
-                    await Task.Delay(500, stoppingToken);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"{ex.Message}");
-                    await InitializeAsync();
-                }
-            }
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (_channel != null)
-            {
-                await _channel.DisposeAsync(); 
-            }
-
-            if (_connection != null)
-            {
-                await _connection.DisposeAsync();
-            }
-        }
-        */
     }
 }

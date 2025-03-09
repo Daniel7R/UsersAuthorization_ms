@@ -1,4 +1,5 @@
-﻿using UsersAuthorization.Application.Messages.Response;
+﻿using AutoMapper;
+using UsersAuthorization.Application.Messages.Response;
 using UsersAuthorization.Domain.Entities;
 using UsersAuthorization.Infrastructure.Repository;
 
@@ -7,22 +8,47 @@ namespace UsersAuthorization.Application.EventHandler
     public class UserEventHandler
     {
         private readonly IRepository<ApplicationUser> _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserEventHandler(IRepository<ApplicationUser> userRepository)
+        public UserEventHandler(IRepository<ApplicationUser> userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public async Task<GetUserByIdResponse> GetUserInfo(int idUser)
         {
+
             var user = await _userRepository.GetByIdAsync(idUser);
-#pragma warning disable CS8601 // Posible asignación de referencia nula
             return new GetUserByIdResponse
             {
                 Id = user?.Id ?? 0,
                 Name = user?.Name,
                 Email = user?.Email
             };
+        }
+
+        /// <summary>
+        /// Multiple users
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
+        public async Task<List<GetUserByIdResponse>> GetUsersInfo(List<int> idUsers)
+        {
+
+            var users = await _userRepository.GetAllAsync();
+
+            var filteredUsers = users.Where(u => idUsers.Contains(u.Id)).ToList();
+
+            List<GetUserByIdResponse> response = filteredUsers.Select(user => new GetUserByIdResponse
+            {
+                Email = user.Email,
+                Id = user.Id,
+                Name = user.Name
+            }
+            ).ToList();
+            return response;
+
         }
 
         /// <summary>
