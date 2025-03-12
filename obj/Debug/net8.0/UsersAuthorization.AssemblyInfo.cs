@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UsersAuthorization")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a4c74c9381c4fbfd0ae856ca254a676b8628340e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e4d629e169ebfd8908ae92b9fdfff3811731e7a")]
 [assembly: System.Reflection.AssemblyProductAttribute("UsersAuthorization")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UsersAuthorization")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
