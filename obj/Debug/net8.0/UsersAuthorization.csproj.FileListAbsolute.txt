@@ -12,6 +12,7 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.runtimeconfig.json
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.pdb
+C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.xml
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\Azure.Core.dll
@@ -264,8 +265,7 @@ C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\De
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAut.F53F1AB5.Up2Date
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.dll
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\refint\UsersAuthorization.dll
+C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.xml
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.pdb
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.genruntimeconfig.cache
 C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\ref\UsersAuthorization.dll
-C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\bin\Debug\net8.0\UsersAuthorization.xml
-C:\Users\dr734\OneDrive\Escritorio\assessment\E-Sports\UsersAuthorization\obj\Debug\net8.0\UsersAuthorization.xml
