@@ -54,12 +54,19 @@ jobs:
             run: |
                 ecs_task_definition=$(envsubst < ./deployments/e-sports-revision1.json)
 
-                echo "$ecs_task_definition"
+                echo "$ecs_task_definition" > /tmp/task-definition.json
                 
-                aws ecs register-task-definition \
-                  --cli-input-json "$ecs_task_definition" \
+                new_task_definition=$(aws ecs register-task-definition \
+                  --cli-input-json file:///tmp/task-definition.json \
+                  --region us-east-2)
+                
+                new_task_definition_arn=$(echo $new_task_definition | jq -r '.taskDefinition.taskDefinitionArn')
+
+                aws ecs update-service \
+                  --cluster e-sports \
+                  --service users-container \
+                  --task-definition $new_task_definition_arn \
                   --region us-east-2
-            
             env:
               DB_USERS: ${{ secrets.DB_USERS }}
               JWT_SECRET: ${{ secrets.JWT_SECRET }}
