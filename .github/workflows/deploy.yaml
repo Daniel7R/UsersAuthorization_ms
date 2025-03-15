@@ -140,6 +140,8 @@ jobs:
               --build-arg RabbitMQ__Username="${{ secrets.USERNAME_RABBIT }}" \
               --build-arg RabbitMQ__Password="${{ secrets.PASSWORD_RABBIT }}" \
               -t  "$REPO:latest" .
+
+              docker run --rm $REPO:latest printenv
               
               docker push "$REPO:latest"
 
