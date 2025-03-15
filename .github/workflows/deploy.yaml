@@ -52,7 +52,14 @@ jobs:
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
               envsubst < ./deployments/e-sports-revision1.json > ./deployments/e-sports-revision1-replaced.json
-
+            env:
+              DB_USERS: ${{ secrets.DB_USERS }}
+              JWT_SECRET: ${{ secrets.JWT_SECRET }}
+              JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+              JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
+              HOST_RABBIT: ${{ secrets.HOST_RABBIT }}
+              USERNAME_RABBIT: ${{ secrets.USERNAME_RABBIT }}
+              PASSWORD_RABBIT: ${{ secrets.PASSWORD_RABBIT }}
 
           - name: 🔐 Configure AWS Credentials
             uses: aws-actions/configure-aws-credentials@v4
@@ -85,13 +92,13 @@ jobs:
               fi
 
               docker build  \
-              --build-arg DB_USERS="${{ secrets.DB_USERS }}" \
-              --build-arg JWT_SECRET="${{ secrets.JWT_SECRET }}" \
-              --build-arg JWT_ISSUER="${{ secrets.JWT_ISSUER }}" \
-              --build-arg JWT_AUDIENCE="${{ secrets.JWT_AUDIENCE }}" \
-              --build-arg HOST_RABBIT="${{ secrets.HOST_RABBIT }}" \
-              --build-arg USERNAME_RABBIT="${{ secrets.USERNAME_RABBIT }}" \
-              --build-arg PASSWORD_RABBIT="${{ secrets.PASSWORD_RABBIT }}" \
+              --env DB_USERS="${{ secrets.DB_USERS }}" \
+              --env JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+              --env JWT_ISSUER="${{ secrets.JWT_ISSUER }}" \
+              --env JWT_AUDIENCE="${{ secrets.JWT_AUDIENCE }}" \
+              --env HOST_RABBIT="${{ secrets.HOST_RABBIT }}" \
+              --env USERNAME_RABBIT="${{ secrets.USERNAME_RABBIT }}" \
+              --env PASSWORD_RABBIT="${{ secrets.PASSWORD_RABBIT }}" \
               -t  "$REPO:latest" .
               docker push "$REPO:latest"
 
