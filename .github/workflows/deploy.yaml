@@ -70,7 +70,7 @@ jobs:
                 new_task_definition_arn=$(echo $new_task_definition | jq -r '.taskDefinition.taskDefinitionArn')
 
                 aws ecs update-service \
-                  --cluster e-sports \
+                  --cluster ESports \
                   --service users-container \
                   --task-definition $new_task_definition_arn \
                   --region us-east-2
