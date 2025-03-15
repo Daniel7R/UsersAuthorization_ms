@@ -59,21 +59,36 @@ jobs:
         
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
-                ecs_task_definition=$(envsubst < ./deployments/e-sports-revision1.json)
+                  jq \
+                  --arg dbUsers "$DB_USERS" \
+                  --arg jwtSecret "$JWT_SECRET" \
+                  --arg jwtIssuer "$JWT_ISSUER" \
+                  --arg jwtAudience "$JWT_AUDIENCE" \
+                  --arg hostRabbit "$HOST_RABBIT" \
+                  --arg portRabbit "$PORT_RABBIT" \
+                  --arg usernameRabbit "$USERNAME_RABBIT" \
+                  --arg passwordRabbit "$PASSWORD_RABBIT" \
+                  '.ConnectionStrings__dbConnectionUsers = $dbUsers |
+                  .APISettings__JwtOptions__Secret = $jwtSecret |
+                  .APISettings__JwtOptions__Issuer = $jwtIssuer |
+                  .APISettings__JwtOptions__Audience = $jwtAudience |
+                  .RabbitMQ__Host = $hostRabbit |
+                  .RabbitMQ__Port = $portRabbit |
+                  .RabbitMQ__Username = $usernameRabbit |
+                  .RabbitMQ__Password = $passwordRabbit' \
+                  ./deployments/e-sports-revision1.json > /tmp/task-definition.json
 
-                echo "$ecs_task_definition" > /tmp/task-definition.json
-                
-                new_task_definition=$(aws ecs register-task-definition \
-                  --cli-input-json file:///tmp/task-definition.json \
-                  --region us-east-2)
-                
-                new_task_definition_arn=$(echo $new_task_definition | jq -r '.taskDefinition.taskDefinitionArn')
+                  new_task_definition=$(aws ecs register-task-definition \
+                    --cli-input-json file:///tmp/task-definition.json \
+                    --region us-east-2)
 
-                aws ecs update-service \
-                  --cluster ESports \
-                  --service users-container \
-                  --task-definition $new_task_definition_arn \
-                  --region us-east-2
+                  new_task_definition_arn=$(echo $new_task_definition | jq -r '.taskDefinition.taskDefinitionArn')
+
+                  aws ecs update-service \
+                    --cluster ESports \
+                    --service users-container \
+                    --task-definition $new_task_definition_arn \
+                    --region us-east-2
             env:
               DB_USERS: ${{ secrets.DB_USERS }}
               JWT_SECRET: ${{ secrets.JWT_SECRET }}

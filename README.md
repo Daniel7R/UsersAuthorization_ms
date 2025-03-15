@@ -12,6 +12,7 @@ Este proyecto gestiona el registro y autorización de usuarios en el sistema de 
 - **Domain/Entities/**: Contiene los modelos o entidades de datos.
 - **Application/Services/**: Contiene los servicios de la aplicación.
 - **Infrastructure/Data/**: Contiene el contexto de la base de datos.
+- **Infrastructure/EventBus/**: Contiene la config del event bus/rabbitmq.
 - **Program.cs**: Punto de entrada del proyecto.
 
 # Instrucciones de Ejecución
