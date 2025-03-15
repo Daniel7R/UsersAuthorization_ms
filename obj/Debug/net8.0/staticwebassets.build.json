@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "nvmCyOHOW0QpykWf+/NTbgaHuh+CctonkWqergKL9NQ=",
+  "Hash": "bAZLbsaH87usq7ZM87XKsXSaQcbwhpgwE983yxJoQp0=",
   "Source": "UsersAuthorization",
   "BasePath": "_content/UsersAuthorization",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
