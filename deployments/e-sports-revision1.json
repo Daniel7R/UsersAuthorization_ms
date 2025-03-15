@@ -2,76 +2,67 @@
     "family": "e-sports",
     "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
     "containerDefinitions": [
-        {
-            "name": "users-container",
-            "image": "692859914395.dkr.ecr.us-east-2.amazonaws.com/assessment/e-sports:latest",
-            "cpu": 0,
-            "portMappings": [
-                {
-                    "name": "users-container-80-tcp",
-                    "containerPort": 80,
-                    "hostPort": 80,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
-                }
-            ],
-            "essential": true,
-            "environment": [
-                {
-                    "name": "ConnectionStrings__dbConnectionUsers",
-                    "value": "${DB_USERS}"
-                },
-                {
-                    "name": "APISettings__JwtOptions__Secret",
-                    "value": "${JWT_SECRET}"
-                },
-                {
-                    "name": "APISettings__JwtOptions__Issuer",
-                    "value": "${JWT_ISSUER}"
-                },
-                {
-                    "name": "APISettings__JwtOptions__Audience",
-                    "value": "${JWT_AUDIENCE}"
-                },
-                {
-                    "name": "RabbitMQ__Host",
-                    "value": "${HOST_RABBIT}"
-                },
-                {
-                    "name": "RabbitMQ__Username",
-                    "value": "${USERNAME_RABBIT}"
-                },
-                {
-                    "name": "RabbitMQ__Password",
-                    "value": "${PASSWORD_RABBIT}"
-                }
-            ],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "/ecs/e-sports-users",
-                    "mode": "non-blocking",
-                    "awslogs-create-group": "true",
-                    "max-buffer-size": "25m",
-                    "awslogs-region": "us-east-2",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            },
-            "systemControls": []
+      {
+        "name": "users-container",
+        "image": "692859914395.dkr.ecr.us-east-2.amazonaws.com/assessment/e-sports:latest",
+        "cpu": 0,
+        "portMappings": [
+          {
+            "containerPort": 80,
+            "hostPort": 80,
+            "protocol": "tcp"
+          }
+        ],
+        "essential": true,
+        "environment": [
+          {
+            "name": "DB_USERS",
+            "value": "${DB_USERS}"
+          },
+          {
+            "name": "JWT_SECRET",
+            "value": "${JWT_SECRET}"
+          },
+          {
+            "name": "JWT_ISSUER",
+            "value": "${JWT_ISSUER}"
+          },
+          {
+            "name": "JWT_AUDIENCE",
+            "value": "${JWT_AUDIENCE}"
+          },
+          {
+            "name": "RABBIT_HOST",
+            "value": "${HOST_RABBIT}"
+          },
+          {
+            "name": "RABBIT_USERNAME",
+            "value": "${USERNAME_RABBIT}"
+          },
+          {
+            "name": "RABBIT_PASSWORD",
+            "value": "${PASSWORD_RABBIT}"
+          }
+        ],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "/ecs/e-sports-users",
+            "awslogs-region": "us-east-2",
+            "awslogs-stream-prefix": "ecs"
+          }
         }
+      }
     ],
-    "volumes": [],
     "requiresCompatibilities": [
-        "FARGATE"
+      "FARGATE"
     ],
     "cpu": "1024",
     "memory": "2048",
     "runtimePlatform": {
-        "cpuArchitecture": "X86_64",
-        "operatingSystemFamily": "LINUX"
+      "cpuArchitecture": "X86_64",
+      "operatingSystemFamily": "LINUX"
     },
-    "enableFaultInjection": false,
     "networkMode": "awsvpc"
-}
+  }
+  
