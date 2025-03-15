@@ -52,6 +52,13 @@ jobs:
 
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
+              export DB_USERS=${{ secrets.DB_USERS }}
+              export JWT_SECRET=${{ secrets.JWT_SECRET }}
+              export JWT_ISSUER=${{ secrets.JWT_ISSUER }}
+              export JWT_AUDIENCE=${{ secrets.JWT_AUDIENCE }}
+              export HOST_RABBIT=${{ secrets.HOST_RABBIT }}
+              export USERNAME_RABBIT=${{ secrets.USERNAME_RABBIT }}
+              export PASSWORD_RABBIT=${{ secrets.PASSWORD_RABBIT }}
               envsubst < ./deployments/e-sports-revision1.json > ./deployments/e-sports-revision1-replaced.json
 
             env:
