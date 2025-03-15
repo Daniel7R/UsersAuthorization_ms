@@ -51,11 +51,12 @@ jobs:
               echo "RabbitMQ__Password=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
 
           - name: "🔍 Debug Environment Variables"
-            run: env | grep 'ConnectionStrings\|APISettings\|RabbitMQ'
+            run: env | grep -E 'DB_USERS|JWT_SECRET|JWT_ISSUER|JWT_AUDIENCE|HOST_RABBIT|USERNAME_RABBIT|PASSWORD_RABBIT'
           
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
               envsubst < ./deployments/e-sports-revision1.json > ./deployments/e-sports-revision1-replaced.json
+
             env:
               DB_USERS: ${{ secrets.DB_USERS }}
               JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -96,13 +97,14 @@ jobs:
               fi
 
               docker build  \
-              --build-arg DB_USERS="${{ secrets.DB_USERS }}" \
-              --build-arg JWT_SECRET="${{ secrets.JWT_SECRET }}" \
-              --build-arg JWT_ISSUER="${{ secrets.JWT_ISSUER }}" \
-              --build-arg JWT_AUDIENCE="${{ secrets.JWT_AUDIENCE }}" \
-              --build-arg HOST_RABBIT="${{ secrets.HOST_RABBIT }}" \
-              --build-arg USERNAME_RABBIT="${{ secrets.USERNAME_RABBIT }}" \
-              --build-arg PASSWORD_RABBIT="${{ secrets.PASSWORD_RABBIT }}" \
+              --build-arg ConnectionStrings__dbConnectionUsers="${{ secrets.DB_USERS }}" \
+              --build-arg APISettings__JwtOptions__Secret="${{ secrets.JWT_SECRET }}" \
+              --build-arg APISettings__JwtOptions__Issuer="${{ secrets.JWT_ISSUER }}" \
+              --build-arg APISettings__JwtOptions__Audience="${{ secrets.JWT_AUDIENCE }}" \
+              --build-arg RabbitMQ__Host="${{ secrets.HOST_RABBIT }}" \
+              --build-arg RabbitMQ__Port="${{ secrets.PORT_RABBIT }}" \
+              --build-arg RabbitMQ__Username="${{ secrets.USERNAME_RABBIT }}" \
+              --build-arg RabbitMQ__Password="${{ secrets.PASSWORD_RABBIT }}" \
               -t  "$REPO:latest" .
               
               docker push "$REPO:latest"
@@ -125,8 +127,8 @@ jobs:
           uses: aws-actions/amazon-ecs-deploy-task-definition@v2
           with:
             cluster: ESports
-            task-definition: ./deployments/e-sports-revision1.json
+            task-definition: ./deployments/e-sports-revision1-replaced.json
             service: users-container
             wait-for-service-stability: true         
         - name: 📜 Debug Verificar Task Definition
-          run: cat ./deployments/e-sports-revision1.json
+          run: cat ./deployments/e-sports-revision1-replaced.json
