@@ -131,7 +131,7 @@ jobs:
               PASSWORD_RABBIT: ${{ secrets.PASSWORD_RABBIT }}
           
           - name: Save Task Definition as Artifact
-            uses: actions/upload-artifact@v3
+            uses: actions/upload-artifact@v4
             with:
               name: ecs-task-definition
               path: ecs_task_def_updated.json
@@ -196,7 +196,7 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: us-east-2
         - name: Download Task Definition Artifact
-          uses: actions/download-artifact@v3
+          uses: actions/download-artifact@v4
           with:
             name: ecs-task-definition
                   
