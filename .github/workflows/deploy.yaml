@@ -50,9 +50,6 @@ jobs:
               echo "RabbitMQ__Username=${{ secrets.USERNAME_RABBIT }}" >> $GITHUB_ENV
               echo "RabbitMQ__Password=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
 
-          - name: "🔍 Debug Environment Variables"
-            run: env | grep -E 'DB_USERS|JWT_SECRET|JWT_ISSUER|JWT_AUDIENCE|HOST_RABBIT|USERNAME_RABBIT|PASSWORD_RABBIT'
-          
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
               envsubst < ./deployments/e-sports-revision1.json > ./deployments/e-sports-revision1-replaced.json
