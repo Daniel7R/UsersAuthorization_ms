@@ -11,6 +11,15 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
 
+ARG ConnectionStrings__dbConnectionUsers
+ARG APISettings__JwtOptions__Secret
+ARG APISettings__JwtOptions__Issuer
+ARG APISettings__JwtOptions__Audience
+ARG RabbitMQ__Host
+ARG RabbitMQ__Port
+ARG RabbitMQ__Username
+ARG RabbitMQ__Password
+
 ENV ConnectionStrings__dbConnectionUsers=${ConnectionStrings__dbConnectionUsers}
 ENV APISettings__JwtOptions__Secret=${APISettings__JwtOptions__Secret}
 ENV APISettings__JwtOptions__Issuer=${APISettings__JwtOptions__Issuer}
