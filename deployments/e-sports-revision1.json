@@ -15,16 +15,15 @@
                 }
             ],
             "essential": true,
-            "environment": [
-                { "name": "ConnectionStrings__dbConnectionUsers", "value": "${ConnectionStrings__dbConnectionUsers}" },
-                { "name": "APISettings__JwtOptions__Secret", "value": "${APISettings__JwtOptions__Secret}" },
-                { "name": "APISettings__JwtOptions__Issuer", "value": "${APISettings__JwtOptions__Issuer}" },
-                { "name": "APISettings__JwtOptions__Audience", "value": "${APISettings__JwtOptions__Audience}" },
-                { "name": "RabbitMQ__Host", "value": "${RabbitMQ__Host}" },
-                { "name": "RabbitMQ__Port", "value": "${RabbitMQ__Port}" },
-                { "name": "RabbitMQ__Username", "value": "${RabbitMQ__Username}" },
-                { "name": "RabbitMQ__Password", "value": "${RabbitMQ__Password}" }
-            ],
+   "environment": [
+      { "name": "ConnectionStrings__dbConnectionUsers", "value": "${DB_USERS}" },
+      { "name": "APISettings__JwtOptions__Secret", "value": "${JWT_SECRET}" },
+      { "name": "APISettings__JwtOptions__Issuer", "value": "${JWT_ISSUER}" },
+      { "name": "APISettings__JwtOptions__Audience", "value": "${JWT_AUDIENCE}" },
+      { "name": "RabbitMQ__Host", "value": "${HOST_RABBIT}" },
+      { "name": "RabbitMQ__Username", "value": "${USERNAME_RABBIT}" },
+      { "name": "RabbitMQ__Password", "value": "${PASSWORD_RABBIT}" }
+    ],
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
