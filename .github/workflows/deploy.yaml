@@ -49,7 +49,14 @@ jobs:
               echo "RabbitMQ__Port=${{ secrets.PORT_RABBIT }}" >> $GITHUB_ENV
               echo "RabbitMQ__Username=${{ secrets.USERNAME_RABBIT }}" >> $GITHUB_ENV
               echo "RabbitMQ__Password=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
-
+        
+          - name: 🔐 Configure AWS Credentials
+            uses: aws-actions/configure-aws-credentials@v4
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: us-east-2
+        
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
                 ecs_task_definition=$(envsubst < ./deployments/e-sports-revision1.json)
