@@ -39,15 +39,17 @@ jobs:
             uses: actions/setup-dotnet@v4
             with:
               dotnet-version: 8.x
-          - name: "⬆️Load Env" 
+          - name: "⬆️Load Env"
             run: |
-              echo "DB_USERS=${{ secrets.DB_USERS }}" >> $GITHUB_ENV
-              echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
-              echo "JWT_ISSUER=${{ secrets.JWT_ISSUER }}" >> $GITHUB_ENV
-              echo "JWT_AUDIENCE=${{ secrets.JWT_AUDIENCE }}" >> $GITHUB_ENV
-              echo "HOST_RABBIT=${{ secrets.HOST_RABBIT }}" >> $GITHUB_ENV
-              echo "USERNAME_RABBIT=${{ secrets.USERNAME_RABBIT }}" >> $GITHUB_ENV
-              echo "PASSWORD_RABBIT=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
+              echo "ConnectionStrings__dbConnectionUsers=${{ secrets.DB_USERS }}" >> $GITHUB_ENV
+              echo "APISettings__JwtOptions__Secret=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+              echo "APISettings__JwtOptions__Issuer=${{ secrets.JWT_ISSUER }}" >> $GITHUB_ENV
+              echo "APISettings__JwtOptions__Audience=${{ secrets.JWT_AUDIENCE }}" >> $GITHUB_ENV
+              echo "RabbitMQ__Host=${{ secrets.HOST_RABBIT }}" >> $GITHUB_ENV
+              echo "RabbitMQ__Port=${{ secrets.PORT_RABBIT }}" >> $GITHUB_ENV
+              echo "RabbitMQ__Username=${{ secrets.USERNAME_RABBIT }}" >> $GITHUB_ENV
+              echo "RabbitMQ__Password=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
+
           
           - name: 🔄 Replace Env Variables in Task Definition
             run: |

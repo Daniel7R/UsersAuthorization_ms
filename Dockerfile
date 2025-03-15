@@ -11,21 +11,25 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
 
-ARG DB_USERS=""
-ARG JWT_SECRET=""
-ARG JWT_ISSUER=""
-ARG JWT_AUDIENCE=""
-ARG HOST_RABBIT=""
-ARG USERNAME_RABBIT=""
-ARG PASSWORD_RABBIT=""
+ARG ConnectionStrings__dbConnectionUsers
+ARG APISettings__JwtOptions__Secret
+ARG APISettings__JwtOptions__Issuer
+ARG APISettings__JwtOptions__Audience
+ARG RabbitMQ__Host
+ARG RabbitMQ__Port
+ARG RabbitMQ__Username
+ARG RabbitMQ__Password
 
-ENV DB_USERS=$DB_USERS
-ENV JWT_SECRET=$JWT_SECRET
-ENV JWT_ISSUER=$JWT_ISSUER
-ENV JWT_AUDIENCE=$JWT_AUDIENCE
-ENV HOST_RABBIT=$HOST_RABBIT
-ENV USERNAME_RABBIT=$USERNAME_RABBIT
-ENV PASSWORD_RABBIT=$PASSWORD_RABBIT
+ENV APISettings__JwtOptions__Secret=$APISettings__JwtOptions__Secret
+ENV ConnectionStrings__dbConnectionUsers=$ConnectionStrings__dbConnectionUsers
+ENV APISettings__JwtOptions__Issuer=$APISettings__JwtOptions__Issuer
+ENV RabbitMQ__Host=$RabbitMQ__Host
+ENV APISettings__JwtOptions__Audience=$APISettings__JwtOptions__Audience
+ENV RabbitMQ__Port=$RabbitMQ__Port
+ENV RabbitMQ__Username=$RabbitMQ__Username
+ENV RabbitMQ__Password=$RabbitMQ__Password
+
+RUN echo "Variables cargadas: $ConnectionStrings__dbConnectionUsers, $RabbitMQ__Host"
 
 EXPOSE 5089
 
