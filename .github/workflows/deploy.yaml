@@ -100,7 +100,7 @@ jobs:
         - name: 🚀 Deploy to Amazon ECS
           uses: aws-actions/amazon-ecs-deploy-task-definition@v2
           with:
+            cluster: ESports
             task-definition: ./deployments/e-sports-revision1.json
             service: users-container
-            cluster: dev-cluster
             wait-for-service-stability: true         
