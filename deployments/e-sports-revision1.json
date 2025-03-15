@@ -1,5 +1,5 @@
 {
-    "family": "e-sports",
+    "family": "e-sports-users",
     "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
     "containerDefinitions": [
       {
