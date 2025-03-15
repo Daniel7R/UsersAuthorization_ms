@@ -42,3 +42,39 @@ Swagger automáticamente genera la documentación de la API. Para ver la documen
   "password": "Carlos123*"
 }
 ```
+
+***Respuesta***:
+```
+{
+    "result": null,
+    "isSuccess": true,
+    "message": ""
+}
+```
+
+- [POST] `/api/v1/auth/login`: este metodo es el encargado de autenticar al usuario de acuerdo a un usuario y contraña que se envian en la peticion, con el fin de autenticar al usuario para poder estar autorizado a hacer uso de ciertos recursos, este metodo retorna varios items del detalle del user, ademas de un JWT.
+
+***Body**:
+```
+{
+  "username": "pepito2@gmail.com",
+  "password": "Carlos123*"
+}
+```
+
+***Respuesta***:
+```
+{
+    "result": {
+        "user": {
+            "id": 5,
+            "name": "Pepito Perez",
+            "email": "pepito2@gmail.com",
+            "status": "ACTIVE"
+        },
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlcGl0bzJAZ21haWwuY29tIiwic3ViIjoiNSIsIm5hbWUiOiJQZXBpdG8gUGVyZXoiLCJuYmYiOjE3NDIwMjE4MzQsImV4cCI6MTc0MjYwODYzNCwiaWF0IjoxNzQyMDAzODM0LCJpc3MiOiJlLXNwb3J0cy1hdXRoLWFwaSIsImF1ZCI6ImUtc3BvcnRzLWNsaWVudCJ9.YoSsmvgpc4ijw60b235BOmLNBnoK4jVqIFOksSMD_uc"
+    },
+    "isSuccess": true,
+    "message": ""
+}
+```
