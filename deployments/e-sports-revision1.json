@@ -8,9 +8,11 @@
         "cpu": 0,
         "portMappings": [
           {
+            "name": "users-container",
             "containerPort": 5089,
-            "hostPort": 5089,  
-            "protocol": "tcp"
+            "hostPort": 5089,
+            "protocol": "tcp",
+            "appProtocol": "http"
           }
         ],
         "essential": true,
