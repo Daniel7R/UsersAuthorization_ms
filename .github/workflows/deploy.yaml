@@ -130,8 +130,11 @@ jobs:
               USERNAME_RABBIT: ${{ secrets.USERNAME_RABBIT }}
               PASSWORD_RABBIT: ${{ secrets.PASSWORD_RABBIT }}
           
-          - name: List files to confirm task definition
-            run: ls -la
+          - name: Save Task Definition as Artifact
+            uses: actions/upload-artifact@v3
+            with:
+              name: ecs-task-definition
+              path: ecs_task_def_updated.json
 
           # - name: 🔐 Configure AWS Credentials
           #   uses: aws-actions/configure-aws-credentials@v4
@@ -192,6 +195,10 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: us-east-2
+        - name: Download Task Definition Artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: ecs-task-definition
                   
         - name: List files to confirm task definition
           run: ls -la
