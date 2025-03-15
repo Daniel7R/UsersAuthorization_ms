@@ -15,7 +15,15 @@
                 }
             ],
             "essential": true,
-            "environment": [],
+            "environment": [
+                { "name": "DB_USERS", "value": "${DB_USERS}" },
+                { "name": "JWT_SECRET", "value": "${JWT_SECRET}" },
+                { "name": "JWT_ISSUER", "value": "${JWT_ISSUER}" },
+                { "name": "JWT_AUDIENCE", "value": "${JWT_AUDIENCE}" },
+                { "name": "HOST_RABBIT", "value": "${HOST_RABBIT}" },
+                { "name": "USERNAME_RABBIT", "value": "${USERNAME_RABBIT}" },
+                { "name": "PASSWORD_RABBIT", "value": "${PASSWORD_RABBIT}" }
+            ],
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
