@@ -16,13 +16,14 @@
             ],
             "essential": true,
             "environment": [
-                { "name": "DB_USERS", "value": "${DB_USERS}" },
-                { "name": "JWT_SECRET", "value": "${JWT_SECRET}" },
-                { "name": "JWT_ISSUER", "value": "${JWT_ISSUER}" },
-                { "name": "JWT_AUDIENCE", "value": "${JWT_AUDIENCE}" },
-                { "name": "HOST_RABBIT", "value": "${HOST_RABBIT}" },
-                { "name": "USERNAME_RABBIT", "value": "${USERNAME_RABBIT}" },
-                { "name": "PASSWORD_RABBIT", "value": "${PASSWORD_RABBIT}" }
+                { "name": "ConnectionStrings__dbConnectionUsers", "value": "${ConnectionStrings__dbConnectionUsers}" },
+                { "name": "APISettings__JwtOptions__Secret", "value": "${APISettings__JwtOptions__Secret}" },
+                { "name": "APISettings__JwtOptions__Issuer", "value": "${APISettings__JwtOptions__Issuer}" },
+                { "name": "APISettings__JwtOptions__Audience", "value": "${APISettings__JwtOptions__Audience}" },
+                { "name": "RabbitMQ__Host", "value": "${RabbitMQ__Host}" },
+                { "name": "RabbitMQ__Port", "value": "${RabbitMQ__Port}" },
+                { "name": "RabbitMQ__Username", "value": "${RabbitMQ__Username}" },
+                { "name": "RabbitMQ__Password", "value": "${RabbitMQ__Password}" }
             ],
             "environmentFiles": [],
             "mountPoints": [],
