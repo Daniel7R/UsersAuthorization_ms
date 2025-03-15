@@ -50,6 +50,8 @@ jobs:
               echo "RabbitMQ__Username=${{ secrets.USERNAME_RABBIT }}" >> $GITHUB_ENV
               echo "RabbitMQ__Password=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
 
+          - name: "🔍 Debug Environment Variables"
+            run: env | grep 'ConnectionStrings\|APISettings\|RabbitMQ'
           
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
