@@ -1,4 +1,6 @@
 {
+    "family": "e-sports",
+    "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
     "taskDefinitionArn": "arn:aws:ecs:us-east-2:692859914395:task-definition/e-sports:12",
     "containerDefinitions": [
         {
@@ -61,46 +63,7 @@
             "systemControls": []
         }
     ],
-    "family": "e-sports",
-    "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
-    "networkMode": "awsvpc",
-    "revision": 12,
     "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
-        },
-        {
-            "name": "ecs.capability.execution-role-ecr-pull"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "ecs.capability.task-eni"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2",
-        "FARGATE"
-    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
@@ -110,8 +73,5 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2025-03-15T06:39:30.229Z",
-    "registeredBy": "arn:aws:iam::692859914395:user/github-actions",
-    "enableFaultInjection": false,
-    "tags": []
+    "enableFaultInjection": false
 }
