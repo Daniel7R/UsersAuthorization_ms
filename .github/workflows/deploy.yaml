@@ -51,13 +51,8 @@ jobs:
           
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
-              sed -i 's|${DB_USERS}|'"${{ secrets.DB_USERS }}"'|g' ./deployments/e-sports-revision1.json
-              sed -i 's|${JWT_SECRET}|'"${{ secrets.JWT_SECRET }}"'|g' ./deployments/e-sports-revision1.json
-              sed -i 's|${JWT_ISSUER}|'"${{ secrets.JWT_ISSUER }}"'|g' ./deployments/e-sports-revision1.json
-              sed -i 's|${JWT_AUDIENCE}|'"${{ secrets.JWT_AUDIENCE }}"'|g' ./deployments/e-sports-revision1.json
-              sed -i 's|${HOST_RABBIT}|'"${{ secrets.HOST_RABBIT }}"'|g' ./deployments/e-sports-revision1.json
-              sed -i 's|${USERNAME_RABBIT}|'"${{ secrets.USERNAME_RABBIT }}"'|g' ./deployments/e-sports-revision1.json
-              sed -i 's|${PASSWORD_RABBIT}|'"${{ secrets.PASSWORD_RABBIT }}"'|g' ./deployments/e-sports-revision1.json
+              envsubst < ./deployments/e-sports-revision1.json > ./deployments/e-sports-revision1-replaced.json
+
 
           - name: 🔐 Configure AWS Credentials
             uses: aws-actions/configure-aws-credentials@v4
@@ -99,7 +94,6 @@ jobs:
               --build-arg PASSWORD_RABBIT="${{ secrets.PASSWORD_RABBIT }}" \
               -t  "$REPO:latest" .
               docker push "$REPO:latest"
-
 
     deploy:
       needs: publish
