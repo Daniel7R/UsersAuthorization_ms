@@ -52,12 +52,14 @@ jobs:
 
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
+                aws configure --region us-east-2 
                 ecs_task_definition=$(envsubst < ./deployments/e-sports-revision1.json)
 
                 echo "$ecs_task_definition"
-
+                
                 aws ecs register-task-definition \
                   --cli-input-json "$ecs_task_definition"
+            
             env:
               DB_USERS: ${{ secrets.DB_USERS }}
               JWT_SECRET: ${{ secrets.JWT_SECRET }}
