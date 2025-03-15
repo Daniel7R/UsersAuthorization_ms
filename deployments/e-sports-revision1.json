@@ -9,8 +9,8 @@
         "portMappings": [
           {
             "name": "users-container",
-            "containerPort": 5089,
-            "hostPort": 5089,
+            "containerPort": 8080,
+            "hostPort": 8080,
             "protocol": "tcp",
             "appProtocol": "http"
           }
