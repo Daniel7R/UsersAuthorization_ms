@@ -52,15 +52,12 @@ jobs:
 
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
-              export DB_USERS=${{ secrets.DB_USERS }}
-              export JWT_SECRET=${{ secrets.JWT_SECRET }}
-              export JWT_ISSUER=${{ secrets.JWT_ISSUER }}
-              export JWT_AUDIENCE=${{ secrets.JWT_AUDIENCE }}
-              export HOST_RABBIT=${{ secrets.HOST_RABBIT }}
-              export USERNAME_RABBIT=${{ secrets.USERNAME_RABBIT }}
-              export PASSWORD_RABBIT=${{ secrets.PASSWORD_RABBIT }}
-              envsubst < ./deployments/e-sports-revision1.json > ./deployments/e-sports-revision1-replaced.json
+                ecs_task_definition=$(envsubst < ./deployments/e-sports-revision1.json)
 
+                echo "$ecs_task_definition"
+
+                aws ecs register-task-definition \
+                  --cli-input-json "$ecs_task_definition"
             env:
               DB_USERS: ${{ secrets.DB_USERS }}
               JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -131,8 +128,6 @@ jobs:
           uses: aws-actions/amazon-ecs-deploy-task-definition@v2
           with:
             cluster: ESports
-            task-definition: ./deployments/e-sports-revision1-replaced.json
+            task-definition: ./deployments/e-sports-revision1.json
             service: users-container
-            wait-for-service-stability: true         
-        - name: 📜 Debug Verificar Task Definition
-          run: cat ./deployments/e-sports-revision1-replaced.json
+            wait-for-service-stability: true
