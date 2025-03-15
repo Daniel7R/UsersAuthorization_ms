@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:692859914395:task-definition/e-sports:1",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:692859914395:task-definition/e-sports:12",
     "containerDefinitions": [
         {
             "name": "users-container",
@@ -15,19 +15,38 @@
                 }
             ],
             "essential": true,
-   "environment": [
-      { "name": "ConnectionStrings__dbConnectionUsers", "value": "${DB_USERS}" },
-      { "name": "APISettings__JwtOptions__Secret", "value": "${JWT_SECRET}" },
-      { "name": "APISettings__JwtOptions__Issuer", "value": "${JWT_ISSUER}" },
-      { "name": "APISettings__JwtOptions__Audience", "value": "${JWT_AUDIENCE}" },
-      { "name": "RabbitMQ__Host", "value": "${HOST_RABBIT}" },
-      { "name": "RabbitMQ__Username", "value": "${USERNAME_RABBIT}" },
-      { "name": "RabbitMQ__Password", "value": "${PASSWORD_RABBIT}" }
-    ],
-            "environmentFiles": [],
+            "environment": [
+                {
+                    "name": "ConnectionStrings__dbConnectionUsers",
+                    "value": "${DB_USERS}"
+                },
+                {
+                    "name": "APISettings__JwtOptions__Secret",
+                    "value": "${JWT_SECRET}"
+                },
+                {
+                    "name": "APISettings__JwtOptions__Issuer",
+                    "value": "${JWT_ISSUER}"
+                },
+                {
+                    "name": "APISettings__JwtOptions__Audience",
+                    "value": "${JWT_AUDIENCE}"
+                },
+                {
+                    "name": "RabbitMQ__Host",
+                    "value": "${HOST_RABBIT}"
+                },
+                {
+                    "name": "RabbitMQ__Username",
+                    "value": "${USERNAME_RABBIT}"
+                },
+                {
+                    "name": "RabbitMQ__Password",
+                    "value": "${PASSWORD_RABBIT}"
+                }
+            ],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -37,8 +56,7 @@
                     "max-buffer-size": "25m",
                     "awslogs-region": "us-east-2",
                     "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
+                }
             },
             "systemControls": []
         }
@@ -46,7 +64,7 @@
     "family": "e-sports",
     "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 12,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -92,8 +110,8 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2025-03-15T03:55:09.445Z",
-    "registeredBy": "arn:aws:iam::692859914395:user/daniel",
+    "registeredAt": "2025-03-15T06:39:30.229Z",
+    "registeredBy": "arn:aws:iam::692859914395:user/github-actions",
     "enableFaultInjection": false,
     "tags": []
 }

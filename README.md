@@ -78,3 +78,13 @@ Swagger automáticamente genera la documentación de la API. Para ver la documen
     "message": ""
 }
 ```
+
+
+
+## RabbitMQ(Event Bus)
+En el proyecto se hace uso de RabbitMQ como Message Broker para procesamiento de eventos sincronos con el patron de integracion Request/Reply. 
+
+### Colas Procesamiento Sincrono(Request/Reply Queues)
+- `user.by_id"`: esta cola se encarga de obtener info basica del usuario para validaciones realizadas en algunos ms, con respecto a los usuarios.
+- `users.bulk.info`: esta cola se encarga de obtener la info de los usuarios, pero a nivel de lotes, para mandar correos masivos en las notificaciones.
+- `users.emails`: obtiene los ids de los usuarios a los cuales se les realizara el envio del correo masivo dentro del sistema
