@@ -98,7 +98,7 @@ jobs:
               #   --service users-container \
               #   --task-definition $new_task_definition_arn \
               #   --region us-east-2
-              ecs_task_def=$(cat ecs_task_def.json)
+              ecs_task_def=$(cat ./deployments/e-sports-revision1.json)
               ecs_task_def=$(echo "$ecs_task_def" | jq --arg DB_USERS "${{ secrets.DB_USERS }}" \
                                                           --arg JWT_SECRET "${{ secrets.JWT_SECRET }}" \
                                                           --arg JWT_ISSUER "${{ secrets.JWT_ISSUER }}" \
@@ -129,6 +129,9 @@ jobs:
               HOST_RABBIT: ${{ secrets.HOST_RABBIT }}
               USERNAME_RABBIT: ${{ secrets.USERNAME_RABBIT }}
               PASSWORD_RABBIT: ${{ secrets.PASSWORD_RABBIT }}
+          
+          - name: List files to confirm task definition
+            run: ls -la
 
           # - name: 🔐 Configure AWS Credentials
           #   uses: aws-actions/configure-aws-credentials@v4
@@ -193,6 +196,6 @@ jobs:
           uses: aws-actions/amazon-ecs-deploy-task-definition@v2
           with:
             cluster: ESports
-            task-definition: ./deployments/e-sports-revision1.json
+            task-definition: ecs_task_def_updated.json
             service: users-container
             wait-for-service-stability: true
