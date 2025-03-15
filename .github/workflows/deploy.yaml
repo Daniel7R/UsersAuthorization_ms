@@ -49,7 +49,14 @@ jobs:
               echo "RabbitMQ__Port=${{ secrets.PORT_RABBIT }}" >> $GITHUB_ENV
               echo "RabbitMQ__Username=${{ secrets.USERNAME_RABBIT }}" >> $GITHUB_ENV
               echo "RabbitMQ__Password=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
-        
+            env:
+              DB_USERS: ${{ secrets.DB_USERS }}
+              JWT_SECRET: ${{ secrets.JWT_SECRET }}
+              JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+              JWT_AUDIENCE: ${{ secrets.JWT_AUDIENCE }}
+              HOST_RABBIT: ${{ secrets.HOST_RABBIT }}
+              USERNAME_RABBIT: ${{ secrets.USERNAME_RABBIT }}
+              PASSWORD_RABBIT: ${{ secrets.PASSWORD_RABBIT }}
           - name: 🔐 Configure AWS Credentials
             uses: aws-actions/configure-aws-credentials@v4
             with:
@@ -100,13 +107,13 @@ jobs:
               USERNAME_RABBIT: ${{ secrets.USERNAME_RABBIT }}
               PASSWORD_RABBIT: ${{ secrets.PASSWORD_RABBIT }}
 
-          - name: 🔐 Configure AWS Credentials
-            uses: aws-actions/configure-aws-credentials@v4
-            with:
-              role-skip-session-tagging: true
-              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-              aws-region: us-east-2
+          # - name: 🔐 Configure AWS Credentials
+          #   uses: aws-actions/configure-aws-credentials@v4
+          #   with:
+          #     role-skip-session-tagging: true
+          #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          #     aws-region: us-east-2
 
           - name: 🔑 Login to Amazon ECR
             run: aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ${{ secrets.REPOSITORY }}
