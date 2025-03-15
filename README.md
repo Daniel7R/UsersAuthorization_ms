@@ -1,11 +1,10 @@
 # UsersAuthorization
 Este proyecto gestiona el registro y autorización de usuarios en el sistema de e-sports, por medio de 2 endpoints, que son los
 
-## Dependencias
-
-- ASP.NET Core Identity
-- Entity Framework Core
-- JWT (JSON Web Tokens)
+## Requisitos Previos
+- .NET 8 SDK
+- PostgreSQL
+- RabbitMQ Server
 
 ## Estructura del Proyecto
 
@@ -28,3 +27,18 @@ Esto iniciará el proyecto y estará listo para gestionar la autorización de us
 
 Generar Documentación con Swagger
 Swagger automáticamente genera la documentación de la API. Para ver la documentación generada, inicia la aplicación y navega a http://localhost:<puerto>/swagger.
+
+## Enpoints Controllers
+
+- [POST] `/api/v1/auth/register`: este metodo es el encargado de registrar un usuario dentro del sistema para poder despues hacer uso de un metodo de inicio de sesion.
+
+### Ejemplo: `/api/v1/auth/register`
+
+***Body***:
+```
+{
+  "name": "Pepito Perez",
+  "email": "pepito@gmail.com",
+  "password": "Carlos123*"
+}
+```
