@@ -57,7 +57,7 @@ jobs:
                 echo "$ecs_task_definition"
                 
                 aws ecs register-task-definition \
-                  --cli-input-json "$ecs_task_definition"
+                  --cli-input-json "$ecs_task_definition" \
                   --region us-east-2
             
             env:
