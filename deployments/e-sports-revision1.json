@@ -1,7 +1,6 @@
 {
     "family": "e-sports",
     "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:692859914395:task-definition/e-sports:12",
     "containerDefinitions": [
         {
             "name": "users-container",
