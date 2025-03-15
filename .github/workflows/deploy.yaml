@@ -122,3 +122,5 @@ jobs:
             task-definition: ./deployments/e-sports-revision1.json
             service: users-container
             wait-for-service-stability: true         
+        - name: 📜 Debug: Verificar Task Definition
+          run: cat ./deployments/e-sports-revision1.json
