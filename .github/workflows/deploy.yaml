@@ -58,7 +58,7 @@ jobs:
               aws-region: us-east-2
 
           - name: 🔑 Login to Amazon ECR
-            run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.REPOSITORY }}
+            run: aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ${{ secrets.REPOSITORY }}
 
           - name: 📦 Publish Docker Image to Amazon ECR
             working-directory: .
