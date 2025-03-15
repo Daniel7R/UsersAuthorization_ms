@@ -1,0 +1,62 @@
+name: "Deploy Users 🚀🚀"
+
+on: 
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Checkout repository ⚒️"
+              uses: actions/checkout@v4
+            - name: "⚙️ Setup .NET 8"
+              uses: actions/setup-dotnet@v4
+              with:
+                dotnet-version: 8.x
+            - name: "Restore dependencies 🗳️"
+              run: dotnet restore ./UsersAuthorization.csproj
+            - name: "Build project 🏗️👷‍♀️"
+              run: dotnet build ./UsersAuthorization.csproj --no-restore
+            - name: "Run Tests ✅✅"
+              run: dotnet test ./UsersAuthorization.csproj --no-build --verbosity normal
+    
+    publish:
+        needs: build
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        runs-on: ubuntu-latest
+        steps:
+          - name: 🛠️ Checkout Repository
+            uses: actions/checkout@v4
+
+          - name: ⚙️ Setup .NET 8 SDK
+            uses: actions/setup-dotnet@v4
+            with:
+              dotnet-version: 8.x
+          - name: "⬆️Load Env" 
+            run: |
+              echo "DB_USERS=${{ secrets.DB_USERS }}" >> $GITHUB_ENV
+              echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+              echo "JWT_ISSUER=${{ secrets.JWT_ISSUER }}" >> $GITHUB_ENV
+              echo "JWT_AUDIENCE=${{ secrets.JWT_AUDIENCE }}" >> $GITHUB_ENV
+              echo "HOST_RABBIT=${{ secrets.HOST_RABBIT }}" >> $GITHUB_ENV
+              echo "USERNAME_RABBIT=${{ secrets.USERNAME_RABBIT }}" >> $GITHUB_ENV
+              echo "PASSWORD_RABBIT=${{ secrets.PASSWORD_RABBIT }}" >> $GITHUB_ENV
+
+          - name: 🔐 Configure AWS Credentials
+            uses: aws-actions/configure-aws-credentials@v4
+            with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: us-east-1
+
+          - name: 🔑 Login to Amazon ECR
+            run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.REPOSITORY }}
+
+          - name: 📦 Publish Docker Image to Amazon ECR
+            working-directory: .
+            run: |
+              dotnet publish -c Release -p:ContainerRepository=${{ secrets.REPOSITORY }} -p:RuntimeIdentifier=linux-x64
+              docker push ${{ secrets.REPOSITORY }} --all-tags

@@ -85,4 +85,4 @@ void ApplyMigration()
         var _db = scope.ServiceProvider.GetRequiredService<UserDbContext>();
         if(_db.Database.GetPendingMigrations().Count() >0) _db.Database.Migrate();
     }
-}
+} 
