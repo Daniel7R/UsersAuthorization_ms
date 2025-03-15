@@ -63,6 +63,21 @@ jobs:
           - name: 📦 Publish Docker Image to Amazon ECR
             working-directory: .
             run: |
+              REPO="${{ secrets.REPOSITORY }}"
+    
+              if [[ -z "$REPO" ]]; then
+                echo "Error: secrets.REPOSITORY is empty or is not configured correctly"
+                exit 1
+              fi
+              
+              echo "Using repository: $REPO"
+
               dotnet publish -c Release -r linux-x64 --self-contained false
-              docker build -t ${{ secrets.REPOSITORY }}:latest .
-              docker push ${{ secrets.REPOSITORY }}:latest
+
+              if [ ! -f "Dockerfile" ]; then
+                echo "Error: Docker file not found in current directory."
+                exit 1
+              fi
+
+              docker build -t "$REPO:latest" .
+              docker push "$REPO:latest"
