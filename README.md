@@ -80,8 +80,6 @@ Swagger automáticamente genera la documentación de la API. Para ver la documen
 }
 ```
 
-
-
 ## RabbitMQ(Event Bus)
 En el proyecto se hace uso de RabbitMQ como Message Broker para procesamiento de eventos sincronos con el patron de integracion Request/Reply. 
 

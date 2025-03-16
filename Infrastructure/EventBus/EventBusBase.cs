@@ -34,7 +34,7 @@ namespace UsersAuthorization.Infrastructure.EventBus
                 NetworkRecoveryInterval = TimeSpan.FromSeconds(5),
                 RequestedHeartbeat = TimeSpan.FromSeconds(30),
                 ContinuationTimeout = TimeSpan.FromSeconds(30),
-                VirtualHost= "ngimsipu"
+                VirtualHost= _rabbitmqSettings.Username
                 // Ssl = new SslOption
                 // {
                 //     Enabled = true,
