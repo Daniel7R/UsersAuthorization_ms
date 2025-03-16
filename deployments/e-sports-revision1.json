@@ -5,7 +5,7 @@
       {
         "name": "users-container",
         "image": "692859914395.dkr.ecr.us-east-2.amazonaws.com/assessment/e-sports:latest",
-        "cpu": 0,
+        "cpu": 512,
         "portMappings": [
           {
             "name": "users-container",
