@@ -10,6 +10,8 @@ RUN dotnet publish -c Release -r linux-x64 --self-contained false -o /app/publis
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
+# config listen port
+ENV ASPNETCORE_URLS=http://+:80 
 
 ARG ConnectionStrings__dbConnectionUsers
 ARG APISettings__JwtOptions__Secret
