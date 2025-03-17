@@ -10,7 +10,7 @@ namespace UsersAuthorization.API.Controllers
     {
 
         [HttpGet]
-        [Route("health")]
+        [Route("")]
         public IActionResult HealthCheck()
         {
             return Ok("Healthy");
