@@ -31,8 +31,9 @@ ENV RabbitMQ__Password=${RabbitMQ__Password}
 
 RUN echo "Variables cargadas: $ConnectionStrings__dbConnectionUsers, $RabbitMQ__Host"
 
-EXPOSE 8080 
-EXPOSE 8081 
-EXPOSE 5089
+EXPOSE 80 
+# EXPOSE 8080 
+# EXPOSE 8081 
+# EXPOSE 5089
 
 CMD ["dotnet", "UsersAuthorization.dll"]
