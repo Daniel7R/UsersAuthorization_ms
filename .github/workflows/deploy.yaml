@@ -66,38 +66,7 @@ jobs:
         
           - name: 🔄 Replace Env Variables in Task Definition
             run: |
-              # jq \
-              #   --arg dbUsers "$DB_USERS" \
-              #   --arg jwtSecret "$JWT_SECRET" \
-              #   --arg jwtIssuer "$JWT_ISSUER" \
-              #   --arg jwtAudience "$JWT_AUDIENCE" \
-              #   --arg hostRabbit "$HOST_RABBIT" \
-              #   --arg portRabbit "$PORT_RABBIT" \
-              #   --arg usernameRabbit "$USERNAME_RABBIT" \
-              #   --arg passwordRabbit "$PASSWORD_RABBIT" \
-              #   '.containerDefinitions[0].environment |= map(
-              #     if .name == "DB_USERS" then .value = $dbUsers
-              #     elif .name == "JWT_SECRET" then .value = $jwtSecret
-              #     elif .name == "JWT_ISSUER" then .value = $jwtIssuer
-              #     elif .name == "JWT_AUDIENCE" then .value = $jwtAudience
-              #     elif .name == "RABBIT_HOST" then .value = $hostRabbit
-              #     elif .name == "RABBIT_USERNAME" then .value = $usernameRabbit
-              #     elif .name == "RABBIT_PASSWORD" then .value = $passwordRabbit
-              #     else . end
-              #   )' \
-              #   ./deployments/e-sports-revision1.json > /tmp/task-definition.json
 
-              # new_task_definition=$(aws ecs register-task-definition \
-              #   --cli-input-json file:///tmp/task-definition.json \
-              #   --region us-east-2)
-
-              # new_task_definition_arn=$(echo $new_task_definition | jq -r '.taskDefinition.taskDefinitionArn')
-
-              # aws ecs update-service \
-              #   --cluster ESports \
-              #   --service users-container \
-              #   --task-definition $new_task_definition_arn \
-              #   --region us-east-2
               ecs_task_def=$(cat ./deployments/e-sports-revision1.json)
               ecs_task_def=$(echo "$ecs_task_def" | jq --arg DB_USERS "${{ secrets.DB_USERS }}" \
                                                           --arg JWT_SECRET "${{ secrets.JWT_SECRET }}" \
@@ -135,14 +104,6 @@ jobs:
             with:
               name: ecs-task-definition
               path: ecs_task_def_updated.json
-
-          # - name: 🔐 Configure AWS Credentials
-          #   uses: aws-actions/configure-aws-credentials@v4
-          #   with:
-          #     role-skip-session-tagging: true
-          #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          #     aws-region: us-east-2
 
           - name: 🔑 Login to Amazon ECR
             run: aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin ${{ secrets.REPOSITORY }}

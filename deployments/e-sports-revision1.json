@@ -1,70 +1,124 @@
 {
-    "family": "e-sports-users",
-    "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
-    "containerDefinitions": [
+  "taskDefinitionArn": "arn:aws:ecs:us-east-2:692859914395:task-definition/users-service:1",
+  "containerDefinitions": [
       {
-        "name": "users-container",
-        "image": "692859914395.dkr.ecr.us-east-2.amazonaws.com/assessment/e-sports:latest",
-        "cpu": 512,
-        "portMappings": [
-          {
-            "name": "users-container",
-            "containerPort": 80,
-            "hostPort": 80,
-            "protocol": "tcp",
-            "appProtocol": "http"
-          }
-        ],
-        "essential": true,
-        "environment": [
-          {
-            "name": "DB_USERS",
-            "value": "${DB_USERS}"
+          "name": "users-container",
+          "image": "692859914395.dkr.ecr.us-east-2.amazonaws.com/assessment/e-sports:latest",
+          "cpu": 0,
+          "portMappings": [
+              {
+                  "name": "users-container-80-tcp",
+                  "containerPort": 80,
+                  "hostPort": 80,
+                  "protocol": "tcp",
+                  "appProtocol": "http"
+              }
+          ],
+          "essential": true,
+          "environment": [
+            {
+              "name": "DB_USERS",
+              "value": "${DB_USERS}"
+            },
+            {
+              "name": "JWT_SECRET",
+              "value": "${JWT_SECRET}"
+            },
+            {
+              "name": "JWT_ISSUER",
+              "value": "${JWT_ISSUER}"
+            },
+            {
+              "name": "JWT_AUDIENCE",
+              "value": "${JWT_AUDIENCE}"
+            },
+            {
+              "name": "RABBIT_HOST",
+              "value": "${HOST_RABBIT}"
+            },
+            {
+              "name": "RABBIT_USERNAME",
+              "value": "${USERNAME_RABBIT}"
+            },
+            {
+              "name": "RABBIT_PASSWORD",
+              "value": "${PASSWORD_RABBIT}"
+            }
+          ],
+          "environmentFiles": [],
+          "mountPoints": [],
+          "volumesFrom": [],
+          "ulimits": [],
+          "logConfiguration": {
+              "logDriver": "awslogs",
+              "options": {
+                  "awslogs-group": "/ecs/users-service",
+                  "mode": "non-blocking",
+                  "awslogs-create-group": "true",
+                  "max-buffer-size": "25m",
+                  "awslogs-region": "us-east-2",
+                  "awslogs-stream-prefix": "ecs"
+              },
+              "secretOptions": []
           },
-          {
-            "name": "JWT_SECRET",
-            "value": "${JWT_SECRET}"
-          },
-          {
-            "name": "JWT_ISSUER",
-            "value": "${JWT_ISSUER}"
-          },
-          {
-            "name": "JWT_AUDIENCE",
-            "value": "${JWT_AUDIENCE}"
-          },
-          {
-            "name": "RABBIT_HOST",
-            "value": "${HOST_RABBIT}"
-          },
-          {
-            "name": "RABBIT_USERNAME",
-            "value": "${USERNAME_RABBIT}"
-          },
-          {
-            "name": "RABBIT_PASSWORD",
-            "value": "${PASSWORD_RABBIT}"
-          }
-        ],
-        "logConfiguration": {
-          "logDriver": "awslogs",
-          "options": {
-            "awslogs-group": "/ecs/e-sports-users",
-            "awslogs-region": "us-east-2",
-            "awslogs-stream-prefix": "ecs"
-          }
-        }
+          "systemControls": []
       }
-    ],
-    "requiresCompatibilities": [
+  ],
+  "family": "users-service",
+  "taskRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::692859914395:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "revision": 1,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+      {
+          "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+      },
+      {
+          "name": "ecs.capability.execution-role-awslogs"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.ecr-auth"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.task-iam-role"
+      },
+      {
+          "name": "ecs.capability.execution-role-ecr-pull"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+      },
+      {
+          "name": "ecs.capability.task-eni"
+      },
+      {
+          "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+      }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+      "EC2",
       "FARGATE"
-    ],
-    "cpu": "1024",
-    "memory": "2048",
-    "runtimePlatform": {
+  ],
+  "requiresCompatibilities": [
+      "FARGATE"
+  ],
+  "cpu": "1024",
+  "memory": "3072",
+  "runtimePlatform": {
       "cpuArchitecture": "X86_64",
       "operatingSystemFamily": "LINUX"
-    },
-    "networkMode": "awsvpc"
-  }
-  
+  },
+  "registeredAt": "2025-03-17T18:29:26.148Z",
+  "registeredBy": "arn:aws:iam::692859914395:user/daniel",
+  "enableFaultInjection": false,
+  "tags": []
+}
