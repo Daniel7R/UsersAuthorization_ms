@@ -544,3 +544,6 @@ c:\Users\daniel.riverar_pragm\Desktop\Ms\UsersAuthorization_ms\obj\Debug\net8.0\
 c:\Users\daniel.riverar_pragm\Desktop\Ms\UsersAuthorization_ms\obj\Debug\net8.0\UsersAuthorization.genruntimeconfig.cache
 c:\Users\daniel.riverar_pragm\Desktop\Ms\UsersAuthorization_ms\obj\Debug\net8.0\ref\UsersAuthorization.dll
 c:\Users\daniel.riverar_pragm\Desktop\Ms\UsersAuthorization_ms\bin\Debug\net8.0\deployments\e-sports-revision1.json
+C:\Users\daniel.riverar_pragm\Desktop\Ms\UsersAuthorization_ms\bin\Debug\net8.0\deployments\e-sports-revision1 copy.json
+C:\Users\daniel.riverar_pragm\Desktop\Ms\UsersAuthorization_ms\bin\Debug\net8.0\Prometheus.NetStandard.dll
+C:\Users\daniel.riverar_pragm\Desktop\Ms\UsersAuthorization_ms\bin\Debug\net8.0\Prometheus.AspNetCore.dll

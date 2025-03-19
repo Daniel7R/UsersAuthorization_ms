@@ -54,6 +54,8 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
+Metrics.SuppressDefaultMetrics();
+
 var app = builder.Build();
 
 
