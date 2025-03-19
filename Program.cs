@@ -13,6 +13,7 @@ using DotNetEnv;
 using Microsoft.AspNetCore.DataProtection;
 using UsersAuthorization.Application.EventHandler;
 using Microsoft.OpenApi.Models;
+using Prometheus;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
@@ -63,9 +64,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
 // app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseHttpMetrics();
+
+app.UseEndpoints(endpoints => {
+    endpoints.MapMetrics();
+});
 
 app.MapControllers();
 
