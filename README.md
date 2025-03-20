@@ -1,5 +1,5 @@
 # UsersAuthorization
-Este proyecto gestiona el registro y autorización de usuarios en el sistema de e-sports, por medio de 2 endpoints, que son los
+Este proyecto gestiona el registro y autorización de usuarios en el sistema de e-sports, por medio de 2 endpoints, que son los de registrar y autenticar
 
 ## Requisitos Previos
 - .NET 8 SDK
