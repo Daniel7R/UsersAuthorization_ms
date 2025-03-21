@@ -35,7 +35,7 @@ namespace UsersAuthorization.Infrastructure.Authentication
                 Subject = new ClaimsIdentity(claimList),
                 IssuedAt = DateTime.UtcNow.AddHours(-5),
                 //Expires = DateTime.UtcNow.AddHours(1),
-                Expires = DateTime.UtcNow.AddHours(-5).AddDays(7),
+                Expires = DateTime.UtcNow.AddHours(-5).AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
